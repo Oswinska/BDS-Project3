@@ -3,6 +3,7 @@ module vut.cz.bpcbdsproject3 {
     requires javafx.fxml;
     requires java.sql;
     requires org.slf4j;
+    requires org.controlsfx.controls;
 
 
     opens vut.cz.bpcbdsproject3 to javafx.fxml;
