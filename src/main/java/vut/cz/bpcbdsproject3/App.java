@@ -3,19 +3,24 @@ package vut.cz.bpcbdsproject3;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class App extends Application
 {
     private FXMLLoader loader;
-    private VBox mainStage;
+    private AnchorPane mainStage;
+    public static int userId;
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args)
     {
         launch(args);
     }
 
+    @Override
     public void start(Stage primaryStage)
     {
         try
@@ -27,9 +32,12 @@ public class App extends Application
                 setUserAgentStylesheet(STYLESHEET_MODENA);
                 primaryStage.setScene(scene);
                 primaryStage.show();
-            } catch (Exception e)
+            }
+        catch (Exception e)
             {
-                System.out.print(System.out.format("Exception %s thrown",e));
+                e.printStackTrace();
+                logger.error("Exception in method start: " + e.getMessage());
+                return;
             }
     }
 }
