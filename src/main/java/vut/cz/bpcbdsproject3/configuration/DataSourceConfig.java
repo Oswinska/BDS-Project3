@@ -20,34 +20,26 @@ public class DataSourceConfig {
 
     private static final String APPLICATION_PROPERTIES = "application.properties";
 
-    static
-        {
-            try (InputStream resourceStream = DataSourceConfig.class.getClassLoader().getResourceAsStream(APPLICATION_PROPERTIES))
-                {
-                    Properties properties = new Properties();
-                    properties.load(resourceStream);
-                    config.setJdbcUrl(properties.getProperty("datasource.url"));
-                    config.setUsername(properties.getProperty("datasource.username"));
-                    config.setPassword(properties.getProperty("datasource.password"));
-                    ds = new HikariDataSource(config);
-                }
-            catch (IOException | NullPointerException | IllegalArgumentException e)
-                {
-                    logger.error("Configuration of the datasource was not successful.", e);
-                }
-            catch (Exception e)
-                {
-                    logger.error("Could not connect to the database.", e);
-                }
+    static {
+        try (InputStream resourceStream = DataSourceConfig.class.getClassLoader().getResourceAsStream(APPLICATION_PROPERTIES)) {
+            Properties properties = new Properties();
+            properties.load(resourceStream);
+            config.setJdbcUrl(properties.getProperty("datasource.url"));
+            config.setUsername(properties.getProperty("datasource.username"));
+            config.setPassword(properties.getProperty("datasource.password"));
+            ds = new HikariDataSource(config);
+        } catch (IOException | NullPointerException | IllegalArgumentException e) {
+            logger.error("Configuration of the datasource was not successful.", e);
+        } catch (Exception e) {
+            logger.error("Could not connect to the database.", e);
         }
+    }
 
-    private DataSourceConfig()
-    {
+    private DataSourceConfig() {
 
     }
 
-    public static Connection getConnection() throws SQLException
-    {
+    public static Connection getConnection() throws SQLException {
         return ds.getConnection();
     }
 }
