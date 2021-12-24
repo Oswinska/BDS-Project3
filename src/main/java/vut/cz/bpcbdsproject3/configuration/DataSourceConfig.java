@@ -18,7 +18,7 @@ public class DataSourceConfig {
     private static HikariConfig config = new HikariConfig();
     private static HikariDataSource ds;
 
-    private static final String APPLICATION_PROPERTIES = "application.properties";
+    private static final String APPLICATION_PROPERTIES = "login.credentials";
 
     static {
         try (InputStream resourceStream = DataSourceConfig.class.getClassLoader().getResourceAsStream(APPLICATION_PROPERTIES)) {

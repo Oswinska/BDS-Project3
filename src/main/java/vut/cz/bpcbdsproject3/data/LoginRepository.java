@@ -15,8 +15,8 @@ public class LoginRepository {
     private static final Logger logger = LoggerFactory.getLogger(LoginRepository.class);
 
     public LoginView getLoginView(String email) {
-        try (Connection connection = DataSourceConfig.getConnection(); // opravdu je ten Vas user user a ne person?
-             PreparedStatement prpstmt = connection.prepareStatement("SELECT id, email, password FROM project.\"user\" WHERE email = ?;")) {
+        try (Connection connection = DataSourceConfig.getConnection();
+             PreparedStatement prpstmt = connection.prepareStatement("SELECT person_id, email, password FROM public.person WHERE email = ?;")) {
             prpstmt.setString(1, email);
             try (ResultSet rs = prpstmt.executeQuery()) {
                 if (rs.next()) {
@@ -33,7 +33,7 @@ public class LoginRepository {
         LoginView loginView = new LoginView();
         loginView.setEmail(rs.getString("email"));
         loginView.setHashedPwd(rs.getString("password"));
-        App.userId = rs.getInt("id");
+        App.userId = rs.getInt("person_id");
         return loginView;
     }
 
