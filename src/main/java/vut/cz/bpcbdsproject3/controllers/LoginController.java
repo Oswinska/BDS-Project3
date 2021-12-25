@@ -89,17 +89,17 @@ public class LoginController {
     private void handleGoodLogin() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(App.class.getResource("fxml/Main.fxml"));
+            fxmlLoader.setLocation(App.class.getResource("App.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 614, 350);
             Stage stage = new Stage();
-            stage.setTitle("Your courses");
+            stage.setTitle("Your movies");
             stage.setScene(scene);
             Stage stageOld = (Stage) signInButton.getScene().getWindow();
             stageOld.close();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error(String.format("Couldn't proceed after a good login beacause of FXML loading error!\nMessage: %s", e.getMessage()));
+            logger.error(String.format("Couldn't proceed after a good login because of FXML loading error!\nMessage: %s", e.getMessage()));
         }
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
