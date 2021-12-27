@@ -39,10 +39,6 @@ public class AppController {
     private TableColumn<AppBasicView, String> airTimeColumn;
     @FXML
     private TableColumn<AppBasicView, Integer> pegiColumn;
-    @FXML
-    private TableColumn<AppBasicView, String> theatreColumn;
-    @FXML
-    private TableColumn<AppBasicView, Boolean> registeredColumn;
 
     private AppService appService;
     private AppRepository appRepository;
@@ -59,7 +55,6 @@ public class AppController {
         filmNameColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("name"));
         airTimeColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("airtime"));
         pegiColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, Integer>("pegi"));
-        theatreColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("theatre"));
 
         ObservableList<AppBasicView> observableList = FXCollections.observableArrayList(appService.getMovieBasicView());
         movieTable.setItems(observableList);
@@ -69,10 +64,6 @@ public class AppController {
         logger.info("AppController initialized");
     }
 
-
-    public void handleExitMenuItem(ActionEvent event) {
-        System.exit(0);
-    }
 
     public void handleRegisterMovieButton(ActionEvent actionEvent) {
         try {
@@ -91,7 +82,7 @@ public class AppController {
 
     public void handleRefreshButton(ActionEvent actionEvent) {
         ObservableList<AppBasicView> observablePersonsList =
-                FXCollections.observableArrayList(appRepository.getAllMovies());
+                FXCollections.observableArrayList(appService.getMovieBasicView());
         movieTable.setItems(observablePersonsList);
         movieTable.refresh();
         movieTable.sort();

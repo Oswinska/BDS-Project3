@@ -2,7 +2,6 @@ package vut.cz.bpcbdsproject3.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vut.cz.bpcbdsproject3.App;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
 import vut.cz.bpcbdsproject3.configuration.DataSourceConfig;
 
@@ -35,11 +34,12 @@ public class AppRepository
         while (rs.next())
             {
                 AppBasicView bv = new AppBasicView();
-                Long film_id = rs.getLong("film_id");
-                bv.setId(film_id);
+                bv.setId(rs.getLong("film_id"));
                 bv.setName(rs.getString("film_name"));
                 bv.setPegi(rs.getInt("pegi"));
-                bv.setAirtime(rs.getString("air_time"));
+                String air_time = rs.getString("air_time");
+                bv.setAirtime(air_time);
+                view.add(bv);
             }
         return view;
     }

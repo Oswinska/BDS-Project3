@@ -7,8 +7,6 @@ public class AppBasicView {
     private StringProperty name = new SimpleStringProperty();
     private StringProperty airtime = new SimpleStringProperty();
     private IntegerProperty pegi = new SimpleIntegerProperty();
-    private StringProperty theatre = new SimpleStringProperty();
-
     public Long getId() {
         return idProperty().get();
     }
@@ -41,14 +39,6 @@ public class AppBasicView {
         this.pegiProperty().setValue(pegi);
     }
 
-    public String getTheatre() {
-        return theatreProperty().get();
-    }
-
-    public void setTheatre(String theatre) {
-        this.theatre.setValue(theatre);
-    }
-
     public LongProperty idProperty() {
         return id;
     }
@@ -63,10 +53,6 @@ public class AppBasicView {
 
     public IntegerProperty pegiProperty() {
         return pegi;
-    }
-
-    public StringProperty theatreProperty() {
-        return theatre;
     }
 
 }
