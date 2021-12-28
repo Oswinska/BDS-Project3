@@ -59,18 +59,18 @@ public class AppController {
 
         filmIDColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, Long>("id"));
         filmNameColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("name"));
-        airTimeColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("airtime"));
+        airTimeColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("airTime"));
         pegiColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, Integer>("pegi"));
 
         ObservableList<AppBasicView> observableList = FXCollections.observableArrayList(appService.getMovieBasicView());
         movieTable.setItems(observableList);
 
         movieTable.getSortOrder().add(filmIDColumn);
-
+        handleDetailedViewSelect();
         logger.info("AppController initialized");
     }
 
-    private void handleDetailedViewSelect() // Figure out where to put this
+    private void handleDetailedViewSelect()
     {
         MenuItem edit = new MenuItem("Edit Movie");
         MenuItem detailedView = new MenuItem("More Info");

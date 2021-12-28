@@ -40,8 +40,7 @@ public class AppRepository
                 bv.setId(rs.getLong("film_id"));
                 bv.setName(rs.getString("film_name"));
                 bv.setPegi(rs.getInt("pegi"));
-                String air_time = rs.getString("air_time");
-                bv.setAirtime(air_time);
+                bv.setAirtime(rs.getString("air_time"));
                 view.add(bv);
             }
         return view;
