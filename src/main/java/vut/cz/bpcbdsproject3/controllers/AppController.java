@@ -7,20 +7,22 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.App;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
+import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
+import vut.cz.bpcbdsproject3.data.AppDetailedRepository;
 import vut.cz.bpcbdsproject3.data.AppRepository;
+import vut.cz.bpcbdsproject3.service.AppDetailedService;
 import vut.cz.bpcbdsproject3.service.AppService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class AppController {
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
@@ -42,12 +44,16 @@ public class AppController {
 
     private AppService appService;
     private AppRepository appRepository;
+    private AppDetailedRepository appDetailedRepository;
+    private AppDetailedService appDetailedService;
 
-    public AppController() {
+    public AppController()
+    {
     }
 
     @FXML
-    private void initialize() {
+    private void initialize()
+    {
         appRepository = new AppRepository();
         appService = new AppService(appRepository);
 
@@ -64,16 +70,46 @@ public class AppController {
         logger.info("AppController initialized");
     }
 
+    private void handleDetailedViewSelect() // Figure out where to put this
+    {
+        MenuItem edit = new MenuItem("Edit Movie");
+        MenuItem detailedView = new MenuItem("More Info");
+        MenuItem delete = new MenuItem("Delete Movie");
 
-    public void handleRegisterMovieButton(ActionEvent actionEvent) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(App.class.getResource("RegisterMovie.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 600, 500);
-            Stage stage = new Stage();
-            stage.setTitle("BDS JavaFX Register Movie");
-            stage.setScene(scene);
-            stage.show();
+        detailedView.setOnAction((ActionEvent event) ->
+        {
+            AppBasicView appBasicView = movieTable.getSelectionModel().getSelectedItem();
+            try
+                {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(App.class.getResource("AppDetailed.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+                    Stage stage = new Stage();
+                    Long film_id = appBasicView.getId();
+                    AppDetailedView appDetailedView = appDetailedService.getSelectedMovie(film_id);
+                    stage.setUserData(appDetailedView);
+                    stage.setTitle("Movie Detailed View");
+                    AppDetailedController controller = new AppDetailedController();
+                    stage.show();
+                } catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                    logger.error("Couldn't open Detailed View");
+                }
+        });
+    }
+
+    public void handleRegisterMovieButton(ActionEvent actionEvent)
+    {
+        try
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(App.class.getResource("RegisterMovie.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+                Stage stage = new Stage();
+                stage.setTitle("BDS JavaFX Register Movie");
+                stage.setScene(scene);
+                stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
             logger.error("Couldn't open register movie window");

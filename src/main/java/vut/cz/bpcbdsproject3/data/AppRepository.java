@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
 import vut.cz.bpcbdsproject3.configuration.DataSourceConfig;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +20,7 @@ public class AppRepository
     {
         try (Connection connection = DataSourceConfig.getConnection();
              PreparedStatement prpstmt = connection.prepareStatement(
-                     "SELECT f.film_id, f.film_name, f.pegi, f.air_time from film f ORDER BY f.film_id;"))
+                     "SELECT f.film_id, f.film_name, f.pegi, f.air_time FROM film f ORDER BY f.film_id;"))
             {
                 return mapToAppView(prpstmt, connection);
             } catch (SQLException e)
