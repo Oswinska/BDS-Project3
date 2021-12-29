@@ -15,7 +15,7 @@ public class DataSourceConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
 
-    private static HikariConfig config = new HikariConfig();
+    private static final HikariConfig config = new HikariConfig();
     private static HikariDataSource ds;
 
     private static final String APPLICATION_PROPERTIES = "login.credentials";

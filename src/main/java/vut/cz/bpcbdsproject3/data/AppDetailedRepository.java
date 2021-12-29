@@ -18,10 +18,10 @@ public class AppDetailedRepository
     public AppDetailedView getDetailedView(Long film_id)
     {
         try (Connection connection = DataSourceConfig.getConnection();
-             PreparedStatement prpstmt = connection.prepareStatement("SELECT f.film_id, f.film_name, f.pegi, f.air_time, t.theatre_name,s.screen_number FROM  \"film\" f\n" +
-                     "LEFT JOIN film_has_screen fs ON f.film_id = fs.film_id -- Right join if we want to filter out movies without a screen assigned\n" +
-                     "LEFT JOIN screen s ON fs.screen_id = s.screen_id\n" +
-                     "LEFT JOIN theatre t ON s.theatre_id = t.theatre_id\n" +
+             PreparedStatement prpstmt = connection.prepareStatement("SELECT f.film_id, f.film_name, f.pegi, f.air_time, t.theatre_name,s.screen_number FROM  \"film\" f\n " +
+                     "LEFT JOIN film_has_screen fs ON f.film_id = fs.film_id -- Right join if we want to filter out movies without a screen assigned\n " +
+                     "LEFT JOIN screen s ON fs.screen_id = s.screen_id\n " +
+                     "LEFT JOIN theatre t ON s.theatre_id = t.theatre_id\n " +
                      "WHERE f.film_id = ?;"))
             {
                 prpstmt.setLong(1, film_id);
@@ -43,11 +43,11 @@ public class AppDetailedRepository
     {
         AppDetailedView view = new AppDetailedView();
         view.setFilmId(rs.getLong("film_id"));
-        view.setFilmName(rs.getString("film_id"));
-        view.setPegi(rs.getInt("film_id"));
-        view.setAirTime(rs.getString("film_id"));
-        view.setTheatre(rs.getString("film_id"));
-        view.setScreen(rs.getInt("film_id"));
+        view.setFilmName(rs.getString("film_name"));
+        view.setPegi(rs.getInt("pegi"));
+        view.setAirTime(rs.getString("air_time"));
+        view.setTheatre(rs.getString("theatre_name"));
+        view.setScreen(rs.getInt("screen_number"));
         return view;
     }
 }

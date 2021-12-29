@@ -4,21 +4,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
 <VBox fx:id="fpga" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.cz.bpcbdsproject3.controllers.AppController">
-
-   <children>
-       <MenuBar>
-           <menus>
-               <Menu mnemonicParsing="false" text="File">
-                   <items>
-                       <MenuItem mnemonicParsing="false" text="New"/>
-                       <MenuItem mnemonicParsing="false" text="Quit"/>
-                   </items>
-               </Menu>
-               <Menu mnemonicParsing="false" text="Edit">
-                   <items>
-                       <MenuItem mnemonicParsing="false" text="Test"/>
-                   </items>
-               </Menu>
+    <children>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="New"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="You are on your own. Good Luck"/>
+                    </items>
+                </Menu>
            </menus>
        </MenuBar>
        <TableView fx:id="movieTable" prefHeight="420.0" prefWidth="599.0">

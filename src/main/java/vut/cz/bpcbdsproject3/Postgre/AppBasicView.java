@@ -2,20 +2,25 @@ package vut.cz.bpcbdsproject3.Postgre;
 
 import javafx.beans.property.*;
 
-public class AppBasicView {
-    private LongProperty id = new SimpleLongProperty();
-    private StringProperty name = new SimpleStringProperty();
-    private StringProperty airtime = new SimpleStringProperty();
-    private IntegerProperty pegi = new SimpleIntegerProperty();
-    public Long getId() {
+public class AppBasicView
+{
+    private final LongProperty id = new SimpleLongProperty();
+    private final StringProperty name = new SimpleStringProperty();
+    private final StringProperty airtime = new SimpleStringProperty();
+    private final IntegerProperty pegi = new SimpleIntegerProperty();
+
+    public Long getId()
+    {
         return idProperty().get();
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.idProperty().setValue(id);
     }
 
-    public String getName() {
+    public String getName()
+    {
         return nameProperty().get();
     }
 

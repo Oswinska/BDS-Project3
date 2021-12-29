@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -66,14 +63,14 @@ public class AppController {
         movieTable.setItems(observableList);
 
         movieTable.getSortOrder().add(filmIDColumn);
-        handleDetailedViewSelect();
+        initializeDetailedViewSelect();
         logger.info("AppController initialized");
     }
 
-    private void handleDetailedViewSelect()
+    private void initializeDetailedViewSelect()
     {
-        MenuItem edit = new MenuItem("Edit Movie");
         MenuItem detailedView = new MenuItem("More Info");
+        MenuItem edit = new MenuItem("Edit Movie");
         MenuItem delete = new MenuItem("Delete Movie");
 
         detailedView.setOnAction((ActionEvent event) ->
@@ -83,13 +80,16 @@ public class AppController {
                 {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(App.class.getResource("AppDetailed.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load(), 600, 500);
                     Stage stage = new Stage();
                     Long film_id = appBasicView.getId();
                     AppDetailedView appDetailedView = appDetailedService.getSelectedMovie(film_id);
                     stage.setUserData(appDetailedView);
                     stage.setTitle("Movie Detailed View");
                     AppDetailedController controller = new AppDetailedController();
+                    controller.setStage(stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+                    stage.setScene(scene);
                     stage.show();
                 } catch (IOException ex)
                 {
@@ -97,6 +97,10 @@ public class AppController {
                     logger.error("Couldn't open Detailed View");
                 }
         });
+
+        ContextMenu menu = new ContextMenu();
+        menu.getItems().addAll(detailedView);
+        movieTable.setContextMenu(menu);
     }
 
     public void handleRegisterMovieButton(ActionEvent actionEvent)

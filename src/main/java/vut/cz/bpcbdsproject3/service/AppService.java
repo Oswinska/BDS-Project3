@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AppService
 {
-    private AppRepository appRepository;
+    private final AppRepository appRepository;
 
     public AppService(AppRepository appRepository)
     {
