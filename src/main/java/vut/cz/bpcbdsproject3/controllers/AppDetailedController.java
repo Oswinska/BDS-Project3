@@ -6,8 +6,8 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
-import vut.cz.bpcbdsproject3.data.AppDetailedRepository;
-import vut.cz.bpcbdsproject3.service.AppDetailedService;
+import vut.cz.bpcbdsproject3.data.AppRepository;
+import vut.cz.bpcbdsproject3.service.AppService;
 
 public class AppDetailedController
 {
@@ -28,8 +28,8 @@ public class AppDetailedController
 
     public Stage stage;
 
-    private AppDetailedService appDetailedService;
-    private AppDetailedRepository appDetailedRepository;
+    private AppService appDetailedService;
+    private AppRepository appDetailedRepository;
 
 
     public AppDetailedController()
@@ -44,8 +44,8 @@ public class AppDetailedController
     @FXML
     private void initialize()
     {
-        appDetailedRepository = new AppDetailedRepository();
-        appDetailedService = new AppDetailedService(appDetailedRepository);
+        appDetailedRepository = new AppRepository();
+        appDetailedService = new AppService(appDetailedRepository);
 
         loadWantedData();
         logger.info("AppDetailed Controller initialized");

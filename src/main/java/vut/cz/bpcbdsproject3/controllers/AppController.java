@@ -14,9 +14,7 @@ import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.App;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
 import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
-import vut.cz.bpcbdsproject3.data.AppDetailedRepository;
 import vut.cz.bpcbdsproject3.data.AppRepository;
-import vut.cz.bpcbdsproject3.service.AppDetailedService;
 import vut.cz.bpcbdsproject3.service.AppService;
 
 import java.io.IOException;
@@ -41,8 +39,6 @@ public class AppController {
 
     private AppService appService;
     private AppRepository appRepository;
-    private AppDetailedRepository appDetailedRepository;
-    private AppDetailedService appDetailedService;
 
     public AppController()
     {
@@ -82,7 +78,7 @@ public class AppController {
                     fxmlLoader.setLocation(App.class.getResource("AppDetailed.fxml"));
                     Stage stage = new Stage();
                     Long film_id = appBasicView.getId();
-                    AppDetailedView appDetailedView = appDetailedService.getSelectedMovie(film_id);
+                    AppDetailedView appDetailedView = appService.getSelectedMovie(film_id);
                     stage.setUserData(appDetailedView);
                     stage.setTitle("Movie Detailed View");
                     AppDetailedController controller = new AppDetailedController();
