@@ -4,19 +4,19 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import vut.cz.bpcbdsproject3.App;
-import vut.cz.bpcbdsproject3.data.LoginRepository;
 import org.controlsfx.validation.ValidationSupport;
 import org.controlsfx.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javafx.fxml.FXML;
+import vut.cz.bpcbdsproject3.App;
+import vut.cz.bpcbdsproject3.data.LoginRepository;
 import vut.cz.bpcbdsproject3.service.LoginService;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ public class LoginController {
 
     @FXML
     private void initialize() {
-        initializeServices(); // initialize services called from controller
+        initializeServices();
 
         passwordText.setOnKeyPressed(event ->
         {

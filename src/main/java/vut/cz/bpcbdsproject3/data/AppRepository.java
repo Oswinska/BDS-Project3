@@ -85,4 +85,21 @@ public class AppRepository
         return view;
     }
 
+
+    // Filtered View
+    public List<AppBasicView> getFilteredMovies(Integer pegi)
+    {
+        try (Connection connection = DataSourceConfig.getConnection();
+             PreparedStatement prpstmt = connection.prepareStatement(
+                     "SELECT f.film_id, f.film_name, f.pegi, f.air_time FROM film f " +
+                             "WHERE f.pegi = ? ;"))
+            {
+                prpstmt.setInt(1, pegi);
+                return mapToAppView(prpstmt, connection);
+            } catch (SQLException e)
+            {
+                logger.error("Failed to get Movie DB\nMessage: " + e.getMessage());
+            }
+        return null;
+    }
 }

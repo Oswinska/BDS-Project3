@@ -36,6 +36,10 @@ public class AppController {
     private TableColumn<AppBasicView, String> airTimeColumn;
     @FXML
     private TableColumn<AppBasicView, Integer> pegiColumn;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private TextField filterTextField;
 
     private AppService appService;
     private AppRepository appRepository;
@@ -104,24 +108,31 @@ public class AppController {
         try
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(App.class.getResource("RegisterMovie.fxml"));
+                fxmlLoader.setLocation(App.class.getResource("AppCreateMovie.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 600, 500);
                 Stage stage = new Stage();
-                stage.setTitle("BDS JavaFX Register Movie");
+                stage.setTitle("Register Movie");
                 stage.setScene(scene);
                 stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            logger.error("Couldn't open register movie window");
-        }
+            } catch (IOException ex)
+            {
+                ex.printStackTrace();
+                logger.error("Couldn't open register movie window");
+            }
     }
 
-    public void handleRefreshButton(ActionEvent actionEvent) {
+    public void handleRefreshButton(ActionEvent actionEvent)
+    {
         ObservableList<AppBasicView> observablePersonsList =
                 FXCollections.observableArrayList(appService.getMovieBasicView());
         movieTable.setItems(observablePersonsList);
         movieTable.refresh();
         movieTable.sort();
+    }
+
+    public void handleSearchButton(ActionEvent actionEvent)
+    {
+
     }
 }
 
