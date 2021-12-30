@@ -4,12 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
 import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
+import vut.cz.bpcbdsproject3.Postgre.AppEditView;
 import vut.cz.bpcbdsproject3.configuration.DataSourceConfig;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,8 +96,47 @@ public class AppRepository
                 return mapToAppView(prpstmt, connection);
             } catch (SQLException e)
             {
-                logger.error("Failed to get Movie DB\nMessage: " + e.getMessage());
+                logger.error("Failed to get Filtered DB\nMessage: " + e.getMessage());
             }
         return null;
+    }
+
+    // edit Movie
+    public void editMovie(AppEditView editView)
+    {
+        String editSQL = "begin;"
+                + "UPDATE public.film f SET film_name = ?, pegi = ?, air_time = ? WHERE f.film_id = ?; " +
+                "UPDATE public.film_has_screen fhs SET fhs.film_id = ?, fhs.screen_id = ? " +
+                "LEFT JOIN public.film_has_screen fs ON f.film_id = fs.film_id; ";
+
+        try (Connection conn = DataSourceConfig.getConnection();
+             PreparedStatement prpstmt = conn.prepareStatement(editSQL, Statement.RETURN_GENERATED_KEYS))
+            {
+                prpstmt.setString(1, editView.getName());
+                prpstmt.setInt(2, editView.getPegi());
+                prpstmt.setTimestamp(3, editView.getAirTime());
+                prpstmt.setLong(4, editView.getId());
+                prpstmt.setLong(5, editView.getId());
+                prpstmt.setInt(6, editView.getScreen());
+                try
+                    {
+                        conn.setAutoCommit(false);
+                        int affectedRows = prpstmt.executeUpdate();
+                        if (affectedRows == 0)
+                            {
+                                throw new SQLException("Updating Movie failed");
+                            }
+                        conn.commit();
+                    } catch (SQLException e)
+                    {
+                        conn.rollback();
+                    } finally
+                    {
+                        conn.setAutoCommit(true);
+                    }
+            } catch (SQLException e)
+            {
+                logger.error("Failed updating Movie");
+            }
     }
 }

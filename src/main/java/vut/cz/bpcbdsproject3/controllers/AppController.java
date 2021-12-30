@@ -3,6 +3,7 @@ package vut.cz.bpcbdsproject3.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -58,6 +59,14 @@ public class AppController {
         filmNameColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("name"));
         airTimeColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, String>("airTime"));
         pegiColumn.setCellValueFactory(new PropertyValueFactory<AppBasicView, Integer>("pegi"));
+        searchButton.setOnAction(new EventHandler<ActionEvent>()
+        {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                handleSearchButton(event);
+            }
+        });
 
         ObservableList<AppBasicView> observableList = FXCollections.observableArrayList(appService.getMovieBasicView());
         movieTable.setItems(observableList);
@@ -97,9 +106,33 @@ public class AppController {
                     logger.error("Couldn't open Detailed View");
                 }
         });
+        edit.setOnAction((ActionEvent event) ->
+        {
+            AppBasicView appBasicView = movieTable.getSelectionModel().getSelectedItem();
+            try
+                {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(App.class.getResource("AppEdit.fxml"));
+                    Stage stage = new Stage();
+                    stage.setUserData(appBasicView);
+                    stage.setTitle("Movie Edit");
+                    AppEditController controller = new AppEditController();
+                    controller.setStage(stage);
+                    fxmlLoader.setController(controller);
+                    Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                    logger.error("Couldn't open Edit View");
+                }
+        });
+
 
         ContextMenu menu = new ContextMenu();
         menu.getItems().addAll(detailedView);
+        menu.getItems().addAll(edit);
         movieTable.setContextMenu(menu);
     }
 
@@ -123,15 +156,27 @@ public class AppController {
 
     public void handleRefreshButton(ActionEvent actionEvent)
     {
-        ObservableList<AppBasicView> observablePersonsList =
+        ObservableList<AppBasicView> observableList =
                 FXCollections.observableArrayList(appService.getMovieBasicView());
-        movieTable.setItems(observablePersonsList);
+        movieTable.setItems(observableList);
         movieTable.refresh();
         movieTable.sort();
     }
 
     public void handleSearchButton(ActionEvent actionEvent)
     {
+        try
+            {
+                Integer pegi = Integer.valueOf(filterTextField.getText());
+                ObservableList<AppBasicView> observableList =
+                        FXCollections.observableArrayList(appService.getFilteredView(pegi));
+                movieTable.setItems(observableList);
+                movieTable.refresh();
+                movieTable.sort();
+            } catch (NumberFormatException ex)
+            {
+                logger.error("Couldn't filter, wrong user input" + ex.getMessage());
+            }
 
     }
 }
