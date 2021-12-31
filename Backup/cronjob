@@ -1,0 +1,7 @@
+0 0 1 * * ./backup.docker.sh
+
+OR
+
+@monthly ./backup.docker.sh
+
+to get it running please install cronie
