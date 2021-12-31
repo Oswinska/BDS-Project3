@@ -90,7 +90,7 @@ public class LoginController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(App.class.getResource("App.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 614, 350);
+            Scene scene = new Scene(fxmlLoader.load(), 615, 350);
             Stage stage = new Stage();
             stage.setTitle("Your movies");
             stage.setScene(scene);

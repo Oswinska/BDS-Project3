@@ -47,6 +47,7 @@ public class AppController {
 
     public AppController()
     {
+
     }
 
     @FXML
@@ -184,7 +185,26 @@ public class AppController {
             {
                 logger.error("Couldn't filter, wrong user input" + ex.getMessage());
             }
+    }
 
+    public void handleInjection(ActionEvent actionEvent)
+    {
+        try
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(App.class.getResource("Injection.fxml"));
+                Stage stage = new Stage();
+                InjectionController controller = new InjectionController();
+                controller.setStage(stage);
+                fxmlLoader.setController(controller);
+                Scene scene = new Scene(fxmlLoader.load(), 600, 500);
+                stage.setTitle("SQL Injection");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+                logger.error("Failed to open Injection\nMessage: " + e.getMessage());
+            }
     }
 }
-

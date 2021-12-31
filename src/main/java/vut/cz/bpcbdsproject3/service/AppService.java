@@ -1,9 +1,6 @@
 package vut.cz.bpcbdsproject3.service;
 
-import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
-import vut.cz.bpcbdsproject3.Postgre.AppCreateView;
-import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
-import vut.cz.bpcbdsproject3.Postgre.AppEditView;
+import vut.cz.bpcbdsproject3.Postgre.*;
 import vut.cz.bpcbdsproject3.data.AppRepository;
 
 import java.util.List;
@@ -45,6 +42,12 @@ public class AppService
     public void editMovie(AppEditView editView)
     {
         appRepository.editMovie(editView);
+    }
+
+    // injection
+    public List<InjectionView> getInjectionView(String input)
+    {
+        return appRepository.getInjectionView(input);
     }
 }
 

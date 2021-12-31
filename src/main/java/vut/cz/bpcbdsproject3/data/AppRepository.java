@@ -2,10 +2,7 @@ package vut.cz.bpcbdsproject3.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
-import vut.cz.bpcbdsproject3.Postgre.AppCreateView;
-import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
-import vut.cz.bpcbdsproject3.Postgre.AppEditView;
+import vut.cz.bpcbdsproject3.Postgre.*;
 import vut.cz.bpcbdsproject3.configuration.DataSourceConfig;
 
 import java.sql.*;
@@ -196,5 +193,37 @@ public class AppRepository
             {
                 logger.error("Couldn't delete film\nMessage: " + e.getMessage());
             }
+    }
+
+    // Injection
+    public List<InjectionView> getInjectionView(String input)
+    {
+        String injection = "SELECT id, first_name,last_name,nickname,email FROM \"injectionSQL\".person";
+        try (Connection conn = DataSourceConfig.getConnection();
+             Statement statement = conn.createStatement();
+             ResultSet rs = statement.executeQuery(injection))
+            {
+                List<InjectionView> injectionViews = new ArrayList<>();
+                while (rs.next())
+                    {
+                        injectionViews.add(mapToInjectionView(rs));
+                    }
+                return injectionViews;
+            } catch (SQLException e)
+            {
+                logger.error("Failed to find users\nMessage:" + e.getMessage());
+            }
+        return null;
+    }
+
+    private InjectionView mapToInjectionView(ResultSet rs) throws SQLException
+    {
+        InjectionView injectionView = new InjectionView();
+        injectionView.setId(rs.getLong("id"));
+        injectionView.setFirstName(rs.getString("firstName"));
+        injectionView.setLastName(rs.getString("lastName"));
+        injectionView.setNickName(rs.getString("nickName"));
+        injectionView.setEmail(rs.getString("email"));
+        return injectionView;
     }
 }
