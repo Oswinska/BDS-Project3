@@ -134,7 +134,6 @@ public class AppRepository
             }
     }
 
-
     // edit Movie
     public void editMovie(AppEditView editView)
     {
@@ -179,6 +178,23 @@ public class AppRepository
             } catch (SQLException e)
             {
                 logger.error("Failed updating Movie");
+            }
+    }
+
+    // Remove Movie
+    public void removeFilm(Long id)
+    {
+        String remove = "DELETE FROM public.film WHERE film_id = ? ; " +
+                "DELETE FROM public.film_has_screen WHERE film_id = ? ; ";
+        try (Connection conn = DataSourceConfig.getConnection();
+             PreparedStatement prpstmt = conn.prepareStatement(remove))
+            {
+                prpstmt.setLong(1, id);
+                prpstmt.setLong(2, id);
+                prpstmt.executeUpdate();
+            } catch (SQLException e)
+            {
+                logger.error("Couldn't delete film\nMessage: " + e.getMessage());
             }
     }
 }

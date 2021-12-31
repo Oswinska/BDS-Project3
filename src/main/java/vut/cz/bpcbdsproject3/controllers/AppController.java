@@ -129,11 +129,17 @@ public class AppController {
                     logger.error("Couldn't open Edit View");
                 }
         });
+        delete.setOnAction((ActionEvent event) ->
+        {
+            AppBasicView basicView = movieTable.getSelectionModel().getSelectedItem();
+            appRepository.removeFilm(basicView.getId());
+        });
 
 
         ContextMenu menu = new ContextMenu();
         menu.getItems().addAll(detailedView);
         menu.getItems().addAll(edit);
+        menu.getItems().add(delete);
         movieTable.setContextMenu(menu);
     }
 
