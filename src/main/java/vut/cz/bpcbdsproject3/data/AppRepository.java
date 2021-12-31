@@ -3,6 +3,7 @@ package vut.cz.bpcbdsproject3.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
+import vut.cz.bpcbdsproject3.Postgre.AppCreateView;
 import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
 import vut.cz.bpcbdsproject3.Postgre.AppEditView;
 import vut.cz.bpcbdsproject3.configuration.DataSourceConfig;
@@ -74,8 +75,8 @@ public class AppRepository
     private AppDetailedView mapToDetailedView(ResultSet rs) throws SQLException
     {
         AppDetailedView view = new AppDetailedView();
-        view.setFilmId(rs.getLong("film_id"));
-        view.setFilmName(rs.getString("film_name"));
+        view.setId(rs.getLong("film_id"));
+        view.setName(rs.getString("film_name"));
         view.setPegi(rs.getInt("pegi"));
         view.setAirTime(rs.getString("air_time"));
         view.setTheatre(rs.getString("theatre_name"));
@@ -101,14 +102,47 @@ public class AppRepository
         return null;
     }
 
+    // Create Film
+    public void createFilm(AppCreateView createView)
+    {
+        String insertFilm = "WITH ins AS (\n" +
+                "INSERT INTO public.film (film_name, pegi, air_time)\n" +
+                "VALUES (?,?,?)\n" +
+                "RETURNING film_id),\n" +
+                "ins2 AS (\n" +
+                "INSERT INTO public.film_has_screen (film_id, screen_id)\n" +
+                "VALUES ((SELECT film_id FROM ins),?))\n" +
+                "\n" +
+                "SELECT film_id FROM ins;";
+
+        try (Connection conn = DataSourceConfig.getConnection();
+             PreparedStatement prpstmt = conn.prepareStatement(insertFilm, Statement.RETURN_GENERATED_KEYS))
+            {
+                prpstmt.setString(1, createView.getName());
+                prpstmt.setInt(2, createView.getPegi());
+                prpstmt.setTimestamp(3, createView.getAirTime());
+                prpstmt.setLong(4, createView.getScreen());
+
+                boolean affectedRows = prpstmt.execute();
+                if (!affectedRows)
+                    {
+                        throw new SQLException("Creating film failed");
+                    }
+            } catch (SQLException e)
+            {
+                logger.error("Failed to add film\nMessage: " + e.getMessage());
+            }
+    }
+
+
     // edit Movie
     public void editMovie(AppEditView editView)
     {
-        String editSQL = "begin;"
-                + "UPDATE public.film f SET film_name = ?, pegi = ?, air_time = ? WHERE f.film_id = ?; " +
-                "UPDATE public.film_has_screen fhs SET fhs.film_id = ?, fhs.screen_id = ? " +
-                "LEFT JOIN public.film_has_screen fs ON f.film_id = fs.film_id; ";
-
+        String editSQL = "begin;\n" +
+                " UPDATE public.film f SET film_name = ? , pegi = ?, air_time = ? WHERE f.film_id = ?; \n" +
+                " UPDATE public.film_has_screen fhs SET screen_id = ? WHERE fhs.film_id = ?; \n" +
+                "commit;";
+        String check = "SELECT film_name FROM public.film f WHERE f.film_id = ? ;";
         try (Connection conn = DataSourceConfig.getConnection();
              PreparedStatement prpstmt = conn.prepareStatement(editSQL, Statement.RETURN_GENERATED_KEYS))
             {
@@ -116,11 +150,19 @@ public class AppRepository
                 prpstmt.setInt(2, editView.getPegi());
                 prpstmt.setTimestamp(3, editView.getAirTime());
                 prpstmt.setLong(4, editView.getId());
-                prpstmt.setLong(5, editView.getId());
-                prpstmt.setInt(6, editView.getScreen());
+                prpstmt.setLong(5, editView.getScreen());
+                prpstmt.setLong(6, editView.getId());
                 try
                     {
                         conn.setAutoCommit(false);
+                        try (PreparedStatement checkstatement = conn.prepareStatement(check, Statement.RETURN_GENERATED_KEYS))
+                            {
+                                checkstatement.setLong(1, editView.getId());
+                                checkstatement.execute();
+                            } catch (SQLException e)
+                            {
+                                throw new SQLException("This Movie doesn't exist");
+                            }
                         int affectedRows = prpstmt.executeUpdate();
                         if (affectedRows == 0)
                             {

@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="fpga" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="630.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8">
+      minWidth="-Infinity" prefHeight="630.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8"
+      fx:controller="vut.cz.bpcbdsproject3.controllers.AppCreateController">
    <children>
       <GridPane prefHeight="560.0" prefWidth="630.0">
          <columnConstraints>
@@ -20,6 +21,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
          </rowConstraints>
          <children>
+            <Label text="Film ID">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <GridPane.margin>
+                  <Insets/>
+               </GridPane.margin>
+            </Label>
             <Label text="Film Name" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -60,6 +69,11 @@
                   <Insets/>
                </GridPane.margin>
             </Label>
+            <TextField fx:id="filmIdTextField" editable="false" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </GridPane.margin>
+            </TextField>
             <TextField fx:id="filmNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -89,7 +103,7 @@
       </GridPane>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Button mnemonicParsing="false" text="Add Movie">
+            <Button mnemonicParsing="false" onAction="#handleCreateFilm" text="Add Movie">
                <VBox.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                </VBox.margin>

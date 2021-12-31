@@ -114,7 +114,8 @@ public class AppController {
                     FXMLLoader fxmlLoader = new FXMLLoader();
                     fxmlLoader.setLocation(App.class.getResource("AppEdit.fxml"));
                     Stage stage = new Stage();
-                    stage.setUserData(appBasicView);
+                    AppDetailedView appDetailedView = appService.getSelectedMovie(appBasicView.getId());
+                    stage.setUserData(appDetailedView);
                     stage.setTitle("Movie Edit");
                     AppEditController controller = new AppEditController();
                     controller.setStage(stage);
@@ -141,7 +142,7 @@ public class AppController {
         try
             {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(App.class.getResource("AppCreateMovie.fxml"));
+                fxmlLoader.setLocation(App.class.getResource("AppCreate.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 600, 500);
                 Stage stage = new Stage();
                 stage.setTitle("Register Movie");

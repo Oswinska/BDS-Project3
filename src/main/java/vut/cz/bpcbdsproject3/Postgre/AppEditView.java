@@ -9,11 +9,36 @@ public class AppEditView
     private Integer pegi;
     private Timestamp airTime;
     private String theatre;
-    private Integer screen;
+    private Long screen;
 
     public Long getId()
     {
-        return id;
+        return this.id;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public Integer getPegi()
+    {
+        return this.pegi;
+    }
+
+    public Timestamp getAirTime()
+    {
+        return this.airTime;
+    }
+
+    public String getTheatre()
+    {
+        return this.theatre;
+    }
+
+    public Long getScreen()
+    {
+        return this.screen;
     }
 
     public void setId(Long id)
@@ -21,39 +46,17 @@ public class AppEditView
         this.id = id;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
     public void setName(String name)
     {
         this.name = name;
     }
-
-    public Integer getPegi()
-    {
-        return pegi;
-    }
-
     public void setPegi(Integer pegi)
     {
         this.pegi = pegi;
     }
-
-    public Timestamp getAirTime()
-    {
-        return airTime;
-    }
-
     public void setAirTime(Timestamp airTime)
     {
         this.airTime = airTime;
-    }
-
-    public String getTheatre()
-    {
-        return theatre;
     }
 
     public void setTheatre(String theatre)
@@ -61,12 +64,7 @@ public class AppEditView
         this.theatre = theatre;
     }
 
-    public Integer getScreen()
-    {
-        return screen;
-    }
-
-    public void setScreen(Integer screen)
+    public void setScreen(Long screen)
     {
         this.screen = screen;
     }

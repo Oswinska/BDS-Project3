@@ -1,6 +1,7 @@
 package vut.cz.bpcbdsproject3.service;
 
 import vut.cz.bpcbdsproject3.Postgre.AppBasicView;
+import vut.cz.bpcbdsproject3.Postgre.AppCreateView;
 import vut.cz.bpcbdsproject3.Postgre.AppDetailedView;
 import vut.cz.bpcbdsproject3.Postgre.AppEditView;
 import vut.cz.bpcbdsproject3.data.AppRepository;
@@ -34,10 +35,16 @@ public class AppService
         return appRepository.getFilteredMovies(pegi);
     }
 
-    //Edit View
-    public void editMovie(AppEditView edit)
+    // Create View
+    public void createMovie(AppCreateView createView)
     {
-        appRepository.editMovie(edit);
+        appRepository.createFilm(createView);
+    }
+
+    //Edit View
+    public void editMovie(AppEditView editView)
+    {
+        appRepository.editMovie(editView);
     }
 }
 

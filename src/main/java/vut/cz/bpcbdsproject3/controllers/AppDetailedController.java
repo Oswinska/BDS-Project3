@@ -58,12 +58,12 @@ public class AppDetailedController
             {
                 AppDetailedView appDetailedView = (AppDetailedView) stage.getUserData();
 
-                filmIdTextField.setText(String.valueOf(appDetailedView.getFilmId()));
+                filmIdTextField.setText(String.valueOf(appDetailedView.getId()));
                 filmNameTextField.setText(appDetailedView.getFilmName());
                 pegiTextField.setText(String.valueOf(appDetailedView.getPegi()));
                 airTimeTextField.setText(appDetailedView.getAirTime());
                 theatreTextField.setText(appDetailedView.getTheatre());
-                screenTextField.setText(String.valueOf(appDetailedView.getscreen()));
+                screenTextField.setText(String.valueOf(appDetailedView.getScreen()));
             }
     }
 }

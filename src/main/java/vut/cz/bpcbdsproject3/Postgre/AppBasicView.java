@@ -6,17 +6,12 @@ public class AppBasicView
 {
     private final LongProperty id = new SimpleLongProperty();
     private final StringProperty name = new SimpleStringProperty();
-    private final StringProperty airtime = new SimpleStringProperty();
     private final IntegerProperty pegi = new SimpleIntegerProperty();
+    private final StringProperty airTime = new SimpleStringProperty();
 
     public Long getId()
     {
         return idProperty().get();
-    }
-
-    public void setId(Long id)
-    {
-        this.idProperty().setValue(id);
     }
 
     public String getName()
@@ -24,40 +19,54 @@ public class AppBasicView
         return nameProperty().get();
     }
 
-    public void setName(String name) {
-        this.nameProperty().setValue(name);
-    }
-
-    public String getAirTime() {
-        return airTimeProperty().get();
-    }
-
-    public void setAirtime(String airtime) {
-        this.airTimeProperty().setValue(airtime);
-    }
-
-    public Integer pegi() {
+    public Integer getPegi()
+    {
         return pegiProperty().get();
     }
 
-    public void setPegi(Integer pegi) {
+    public String getAirTime()
+    {
+        return airTimeProperty().get();
+    }
+
+    public void setId(Long id)
+    {
+        this.idProperty().setValue(id);
+    }
+
+    public void setName(String name)
+    {
+        this.nameProperty().setValue(name);
+    }
+
+    public void setPegi(Integer pegi)
+    {
         this.pegiProperty().setValue(pegi);
     }
 
-    public LongProperty idProperty() {
+    public void setAirtime(String airTime)
+    {
+        this.airTimeProperty().setValue(airTime);
+    }
+
+    public LongProperty idProperty()
+    {
         return id;
     }
 
-    public StringProperty nameProperty() {
+    public StringProperty nameProperty()
+    {
         return name;
     }
 
-    public StringProperty airTimeProperty() {
-        return airtime;
+    public IntegerProperty pegiProperty()
+    {
+        return pegi;
     }
 
-    public IntegerProperty pegiProperty() {
-        return pegi;
+    public StringProperty airTimeProperty()
+    {
+        return airTime;
     }
 
 }

@@ -4,25 +4,45 @@ import java.sql.Timestamp;
 
 public class AppCreateView
 {
-    private String filmName;
+    private Long id;
+    private String name;
     private Integer pegi;
     private Timestamp airTime;
-    private Long filmId;
-    private Long screenId;
+    private Long screen;
 
-    public String getFilmName()
+    public Long getId()
     {
-        return filmName;
+        return this.id;
     }
 
-    public void setFilmName(String filmName)
+    public void setId(Long id)
     {
-        this.filmName = filmName;
+        this.id = id;
+    }
+
+    public String getName()
+    {
+        return this.name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public Integer getPegi()
     {
-        return pegi;
+        return this.pegi;
+    }
+
+    public Timestamp getAirTime()
+    {
+        return this.airTime;
+    }
+
+    public Long getScreen()
+    {
+        return this.screen;
     }
 
     public void setPegi(Integer pegi)
@@ -30,33 +50,13 @@ public class AppCreateView
         this.pegi = pegi;
     }
 
-    public Timestamp getAirTime()
-    {
-        return airTime;
-    }
-
     public void setAirTime(Timestamp airTime)
     {
         this.airTime = airTime;
     }
 
-    public Long getFilmId()
+    public void setScreen(Long screen)
     {
-        return filmId;
-    }
-
-    public void setFilmId(Long filmId)
-    {
-        this.filmId = filmId;
-    }
-
-    public Long getScreenId()
-    {
-        return screenId;
-    }
-
-    public void setScreenId(Long screenId)
-    {
-        this.screenId = screenId;
+        this.screen = screen;
     }
 }
