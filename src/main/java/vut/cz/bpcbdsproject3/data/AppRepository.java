@@ -198,7 +198,7 @@ public class AppRepository
     // Injection
     public List<InjectionView> getInjectionView(String input)
     {
-        String injection = "SELECT id, first_name,last_name,nickname,email FROM \"injectionSQL\".person";
+        String injection = "SELECT person_id, first_name,last_name,nickname,email FROM \"injectionSQL\".person p WHERE p.person_id =" + input;
         try (Connection conn = DataSourceConfig.getConnection();
              Statement statement = conn.createStatement();
              ResultSet rs = statement.executeQuery(injection))
