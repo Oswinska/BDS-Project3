@@ -198,7 +198,7 @@ public class AppRepository
     // Injection
     public List<InjectionView> getInjectionView(String input)
     {
-        String injection = "SELECT person_id, first_name,last_name,nickname,email FROM \"injectionSQL\".person p WHERE p.person_id =" + input;
+        String injection = "SELECT person_id, first_name,last_name, nickname, email FROM \"injectionSQL\".person p WHERE p.person_id =" + input;
         try (Connection conn = DataSourceConfig.getConnection();
              Statement statement = conn.createStatement();
              ResultSet rs = statement.executeQuery(injection))
@@ -219,10 +219,10 @@ public class AppRepository
     private InjectionView mapToInjectionView(ResultSet rs) throws SQLException
     {
         InjectionView injectionView = new InjectionView();
-        injectionView.setId(rs.getLong("id"));
-        injectionView.setFirstName(rs.getString("firstName"));
-        injectionView.setLastName(rs.getString("lastName"));
-        injectionView.setNickName(rs.getString("nickName"));
+        injectionView.setId(rs.getLong("person_id"));
+        injectionView.setFirstName(rs.getString("first_name"));
+        injectionView.setLastName(rs.getString("last_name"));
+        injectionView.setNickName(rs.getString("nickname"));
         injectionView.setEmail(rs.getString("email"));
         return injectionView;
     }

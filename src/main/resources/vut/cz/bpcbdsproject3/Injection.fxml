@@ -19,11 +19,11 @@
         </MenuBar>
         <TableView fx:id="injectionTable" prefHeight="262.0" prefWidth="600.0">
             <columns>
-                <TableColumn fx:id="#idColumn" prefWidth="39.0" text="Id"/>
-                <TableColumn fx:id="#firstNameColumn" prefWidth="118.0" text="First Name"/>
-                <TableColumn fx:id="#lastNameColumn" prefWidth="114.0" text="Last Name"/>
-                <TableColumn fx:id="#nickNameColumn" prefWidth="121.0" text="NickName"/>
-                <TableColumn fx:id="#emailColumn" prefWidth="207.0" text="Email"/>
+                <TableColumn fx:id="idColumn" prefWidth="39.0" text="Id"/>
+                <TableColumn fx:id="firstNameColumn" prefWidth="118.0" text="First Name"/>
+                <TableColumn fx:id="lastNameColumn" prefWidth="114.0" text="Last Name"/>
+                <TableColumn fx:id="nickNameColumn" prefWidth="121.0" text="NickName"/>
+                <TableColumn fx:id="emailColumn" prefWidth="207.0" text="Email"/>
             </columns>
         </TableView>
         <GridPane prefHeight="110.0" prefWidth="600.0">
